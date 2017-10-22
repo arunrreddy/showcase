@@ -1,3 +1,3 @@
 # showcase
 
-Some useful modules
+Some part-time dabbling with code

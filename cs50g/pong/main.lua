@@ -33,6 +33,7 @@ function love.load()
 
   player1Score = 0
   player2Score = 0
+  servingPlayer = 1
 
   player1 = Paddle(10, 30, 5, 20)
   player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
@@ -45,7 +46,11 @@ function love.keypressed(key)
     love.event.quit()
   elseif key == 'enter' or key == 'return' then
     if gameState == 'start' then
+      gameState = 'serve'
+    elseif gameState == 'serve' then
       gameState = 'play'
+    elseif gameState == 'gameOver' then
+      gameState = 'start'
     else
       gameState = 'start'
       ball:reset()
@@ -82,6 +87,32 @@ function love.update(dt)
       ball.dy = -ball.dy
     end
 
+    if ball.x < 0 then
+      player2Score = player2Score + 1
+      ball:reset()
+      servingPlayer = 1
+      gameState = 'serve'
+    end
+
+    if ball.x > VIRTUAL_WIDTH then
+      player1Score = player1Score + 1
+      ball:reset()
+      servingPlayer = 2
+      gameState = 'serve'
+    end
+
+    if player1Score == 10 then
+      gameState = 'gameover'
+      player1Score = 0
+      player2Score = 0
+    end
+
+    if player2Score == 10 then
+      gameState = 'gameover'
+      player1Score = 0
+      player2Score = 0
+    end
+
     if ball.y >= VIRTUAL_HEIGHT - 4 then
       ball.y = VIRTUAL_HEIGHT - 4
       ball.dy = -ball.dy
@@ -92,12 +123,16 @@ function love.update(dt)
     player1.dy = -PADDLE_SPEED
   elseif love.keyboard.isDown('s') then
     player1.dy = PADDLE_SPEED
+  else
+    player1.dy = 0
   end
 
   if love.keyboard.isDown('up') then
     player2.dy = -PADDLE_SPEED
   elseif love.keyboard.isDown('down') then
     player2.dy = PADDLE_SPEED
+  else
+    player2.dy = 0
   end
 
   if gameState == 'play' then
@@ -115,17 +150,31 @@ function love.draw()
   love.graphics.setFont(smallFont)
   if gameState == 'start' then
     love.graphics.printf(
-      'Hello Pong!',
+      'Welcome to Pong!',
+      0,
+      10,
+      VIRTUAL_WIDTH,
+      'center'
+    )
+    love.graphics.printf(
+      'Press Enter to begin!',
       0,
       20,
       VIRTUAL_WIDTH,
       'center'
     )
-  else
+  elseif gameState == 'serve' then
     love.graphics.printf(
-      'Hello Pong! play',
+      'Press Enter to serve',
       0,
       20,
+      VIRTUAL_WIDTH,
+      'center'
+    )
+    love.graphics.printf(
+      'Player ' ..tostring(servingPlayer) .."'s serve!",
+      0,
+      10,
       VIRTUAL_WIDTH,
       'center'
     )

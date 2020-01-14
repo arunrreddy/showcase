@@ -58,10 +58,11 @@ function love.update(dt)
       ball.dx = -math.random(140, 200)
     end
   elseif gameState == 'play' then
+    -- follows the ball at all times
+    player1.y = ball.y - 10
     if ball:collides(player1) then
       ball.dx = -ball.dx * 1.03
       ball.x = player1.x + 5
-
       if ball.dy < 0 then
         ball.dy = -math.random(10, 150)
       else

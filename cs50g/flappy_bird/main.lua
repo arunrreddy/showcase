@@ -46,6 +46,7 @@ function love.update(dt)
     % BACKGROUND_LOOPING_POINT
   groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt)
   % VIRTUAL_WIDTH
+  bird:update(dt)
 end
 
 function love.draw()

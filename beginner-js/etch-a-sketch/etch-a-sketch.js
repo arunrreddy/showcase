@@ -1,8 +1,8 @@
 const canvas = document.querySelector('#etch-a-sketch');
 const ctx = canvas.getContext('2d');
 const MOVE_AMOUNT = 10;
-const shakeButton = document.querySelector('shake');
-
+const shakeButton = document.querySelector('.shake');
+const simulateButton = document.querySelector('.simulate');
 const { width, height } = canvas;
 
 let x = Math.floor(Math.random() * width);
@@ -55,6 +55,15 @@ function handleKey(e) {
     }
 }
 
+function simulateSketch(times) {
+    const keys = ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'];
+    keys.concat(keys);
+    for (let idx = 0; idx <= times; idx++) {
+        const randomNumber = Math.round(Math.random() * 7);
+        draw({ key: keys[randomNumber] });
+    }
+}
+
 function clearCanvas() {
     ctx.clearRect(0, 0, width, height);
     canvas.classList.add('shake');
@@ -67,7 +76,7 @@ window.addEventListener('keydown', handleKey);
 
 shakeButton.addEventListener('click', clearCanvas);
 
-
+simulateButton.addEventListener('click', () => simulateSketch(100000));
 // Learnings
 
 /*

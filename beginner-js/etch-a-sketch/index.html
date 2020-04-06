@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Etch A Sketch</title>
-  <link rel="stylesheet" href="../../base.css">
 </head>
 
 <body>
@@ -13,6 +12,7 @@
     <canvas width="1600" height="1000" id="etch-a-sketch"></canvas>
     <div class="buttons">
       <button class="shake">Shake!</button>
+      <button class="simulate">Simulate!</button>
     </div>
 
   </div>
@@ -41,7 +41,14 @@
     canvas.shake {
       animation: shake 0.5s linear 1;
     }
-
+    .buttons .shake, .buttons .simulate {
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-weight: 600;
+      border-radius: 5px;
+    }
     @keyframes shake {
 
       10%,
